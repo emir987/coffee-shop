@@ -1,0 +1,66 @@
+.card {
+  text-align: center;
+  transition: box-shadow 0.3s ease-in-out;
+  background-color: #d7c6b8; /* Warm brown background */
+  background-image: url('/assets/coffee-texture.png'); /* Coffee texture background */
+  background-size: cover;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 10px;
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+
+  .name {
+    font-size: 20px;
+    margin-top: 10px;
+  }
+
+  .description {
+    font-size: 16px;
+    color: #666;
+  }
+
+  .orderButton {
+    background-color: #a86453; /* Warm reddish-brown */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 16px;
+
+    &:hover {
+      background-color: #8d4c3f; /* Darker shade on hover */
+    }
+  }
+}
+
+// Tablet styles
+@media (max-width: 768px) {
+  .card {
+    padding: 12px;
+    .name {
+      font-size: 18px;
+    }
+    .description {
+      font-size: 14px;
+    }
+  }
+}
+
+// Mobile styles
+@media (max-width: 480px) {
+  .card {
+    margin: 0 auto;
+  }
+}

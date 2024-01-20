@@ -1,0 +1,11 @@
+/* Update background color to a warmer tone */
+body {
+  background-color: #f1eae4; /* Warm beige background */
+}
+
+/* Use a cozy font for headings */
+h1 {
+  font-family: 'Georgia', serif; /* Cozy serif font */
+  font-size: 3.2em;
+  line-height: 1.1;
+}

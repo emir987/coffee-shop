@@ -1,0 +1,18 @@
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  
+  // Tablet adjustments
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    padding: 15px;
+  }
+
+  // Mobile adjustments
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+    align-items: center;
+  }
+}
