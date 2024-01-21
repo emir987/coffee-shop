@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import styles from './CoffeeCard.module.scss'; // Import SCSS module
 import { Coffee } from './Coffee';
 import AddOrder from '../Order/AddOrder';
 import { Card, CardActionArea, CardContent, CardMedia, Modal, Typography } from '@mui/material';

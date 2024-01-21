@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { OrderType } from "./Order";
-import { ToggleButtonGroup, ToggleButton, Checkbox, FormControlLabel, FormGroup, Box, TextField, Button, Stack, Typography } from "@mui/material";
+import { ToggleButtonGroup, ToggleButton, Checkbox, FormControlLabel, Box, TextField, Button, Stack } from "@mui/material";
 
 interface AddOrderProps {
   onConfirm: () => void;
@@ -14,7 +14,7 @@ const AddOrder: React.FC<AddOrderProps> = ({ onConfirm, onClose }) => {
   const [extraSugar, setExtraSugar] = useState(false);
   const [specialInstructions, setSpecialInstructions] = useState('');
   const [orderType, setOrderType] = useState<OrderType>();
-  const [orderTypeError, setOrderTypeError] = useState(false); // Single state for order type validation
+  const [orderTypeError, setOrderTypeError] = useState(false);
 
 
   const handleExtraMilkChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,9 +39,8 @@ const AddOrder: React.FC<AddOrderProps> = ({ onConfirm, onClose }) => {
 
   const handleMakeOrder = () => {
     if (!orderType) {
-      setOrderTypeError(true); // Set error state if no option is selected
+      setOrderTypeError(true);
     } else {
-      // Handle valid submission
       onConfirm();
     }
   }
