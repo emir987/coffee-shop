@@ -1,64 +1,72 @@
 import React, { useState } from 'react';
 import { Coffee } from './Coffee';
-import AddOrder from '../Order/AddOrder';
-import { Card, CardActionArea, CardContent, CardMedia, Modal, Typography } from '@mui/material';
+import { Button, Card, CardActionArea, CardContent, CardMedia, DialogActions, DialogContent, DialogContentText, DialogTitle, Dialog, Typography } from '@mui/material';
+import { usePlaceOrder } from '../../services/api/hooks/useOrders';
+import { useUniqueId } from '../../context/UniqueIdContext';
+import { useAlert } from '../../context/AlertContext';
 
 interface CoffeeCardProps {
   coffee: Coffee;
 }
 
 const CoffeeCard: React.FC<CoffeeCardProps> = ({ coffee }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => {
-    setIsModalOpen(true);
+  const {placeOrder} = usePlaceOrder()
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { uniqueId } = useUniqueId();
+  const { showAlert } = useAlert();
+  
+  const openDialog = () => {
+    setIsDialogOpen(true);
   };
 
-  const handleBackdropCloseModal = (
-    _: React.SyntheticEvent<unknown>,
-    reason: "backdropClick" | "escapeKeyDown" | "closeClick"
-  ) => {
-    if (reason !== 'backdropClick') {
-      setIsModalOpen(false);
-    }
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false)
   }
 
-  const confirmOrder = () => {
-    // Add your logic for handling the order confirmation here
-    // For now, we'll just close the modal
-    handleCloseModal()
+  const handleConfirmOrder = () => {
+    placeOrder(
+      {coffeeId: coffee.id, tabletId: uniqueId},
+      () => {
+        showAlert('Order accepted. We\'ll notify you when it\'s ready.', 'success');
+      },
+    );
+    handleCloseDialog()
   };
 
   return (
     <Card sx={{ maxWidth: 345, height: '100%' }}>
-      <CardActionArea onClick={openModal}>
+      <CardActionArea onClick={openDialog}>
         <CardMedia
           component="img"
-          image={coffee.image}
+          src={coffee.publicImage}
           alt={coffee.name}
-         draggable={false} 
+          draggable={false} 
         />
         <CardContent>
-          <Typography gutterBottom variant="h4" component="div">
-            {coffee.name}
+          <Typography gutterBottom variant="h5" component="div">
+            {coffee.name} - ${coffee.price.toFixed(2)}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {coffee.description}
           </Typography>
         </CardContent>
       </CardActionArea>
-      <Modal
-        open={isModalOpen}
-        onClose={handleBackdropCloseModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <AddOrder onClose={handleCloseModal} onConfirm={confirmOrder} />
-      </Modal>
+        <Dialog open={isDialogOpen} onClose={handleCloseDialog} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+          <DialogTitle id="alert-dialog-title">{"Are you sure you want to confirm the order?"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {coffee.name}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleConfirmOrder} color="primary" autoFocus>
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
     </Card>
   );
 };
